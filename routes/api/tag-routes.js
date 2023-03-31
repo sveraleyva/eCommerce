@@ -26,12 +26,22 @@ router.get("/:id", async (req, res) => {
   return res.status(200).json(data);
 });
 
-router.post("/", (req, res) => {
+router.post("/", async (req, res) => {
   // create a new tag
+  try {
+    const data = await Tag.create(req.body);
+    return res.status(200).json(data);
+  } catch (err) {
+    return res.json(err);
+  }
 });
 
-router.put("/:id", (req, res) => {
+router.put("/:id", async (req, res) => {
   // update a tag's name by its `id` value
+  const data = await Category.update(req.body, {
+    where: { id: req.params.id },
+  });
+  return res.status(200).json(data);
 });
 
 router.delete("/:id", async (req, res) => {
